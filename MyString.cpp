@@ -2,12 +2,6 @@
 #include <cstring>
 #include <iostream>
 
-void MyString::blAlloc(int sz) {
-    sz++; //for \0
-    if (str != nullptr) delete[] str;
-    str = new char[sz];
-}
-
 void MyString::cpyAlloc(int sz) {
     sz++; //for \0
 
@@ -15,19 +9,25 @@ void MyString::cpyAlloc(int sz) {
     str = new char[sz];
 
     strcpy(str, old);
-    if (old != nullptr) delete[] old;
+    delete[] old;
 }
 
 MyString::MyString(const char *str) {
     this->length = strlen(str);
 
-    this->str = nullptr;
-    this->blAlloc(this->length);
+    this->str = new char[this->length + 1];
     strcpy(this->str, str);
 }
 
+MyString::MyString(const MyString &ref) {
+    this->length = ref.length;
+
+    this->str = new char[this->length + 1];
+    strcpy(this->str, ref.str);
+}
+
 MyString::~MyString() {
-    if (str != nullptr) delete[] str;
+    delete[] str;
 }
 
 bool MyString::operator==(const MyString &ref) const {
@@ -112,5 +112,4 @@ void MyString::insertStrAt(const MyString &str, int idx) {
     //manually add \0 in the correct position
     this->str[this->length] = '\0';
 }
-
 

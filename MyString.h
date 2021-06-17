@@ -5,11 +5,11 @@ class MyString {
         char *str;
         int length;
 
-        //blank and copying re-alloc
-        void blAlloc(int sz);
+        //copying re-alloc
         void cpyAlloc(int sz);
     public:
         MyString(const char *str = "");
+        MyString(const MyString &ref);
         ~MyString();
 
         bool operator== (const MyString &ref) const;
